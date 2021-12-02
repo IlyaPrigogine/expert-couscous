@@ -5,6 +5,7 @@ import './IERC1155.sol';
 
 contract ConditionalTokens is IERC1155 {
     function prepareCondition(address oracle, bytes32 questionId, uint outcomeSlotCount) external;
+
     function reportPayouts(bytes32 questionId, uint[] calldata payouts) external;
 
     function splitPosition(
@@ -24,7 +25,6 @@ contract ConditionalTokens is IERC1155 {
     ) external;
 
     function redeemPositions(IERC20 collateralToken, bytes32 parentCollectionId, bytes32 conditionId, uint[] calldata indexSets) external;
-
 
 
     function getOutcomeSlotCount(bytes32 conditionId) external view returns (uint);
