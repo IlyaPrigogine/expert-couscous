@@ -3,7 +3,7 @@ pragma solidity ^0.5.6;
 import './IERC20.sol';
 import './IERC1155.sol';
 
-contract ConditionalTokens is IERC1155 {
+contract  IConditionalTokens is IERC1155 {
     function prepareCondition(address oracle, bytes32 questionId, uint outcomeSlotCount) external;
 
     function reportPayouts(bytes32 questionId, uint[] calldata payouts) external;
