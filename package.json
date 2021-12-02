@@ -1,0 +1,46 @@
+{
+  "name": "hardhat-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "hardhat node",
+    "test": "hardhat test --deploy-fixture",
+    "deploy:bsctest": "hardhat deploy --network bsc_test_prd",
+    
+    "compile" : "hardhat clean && hardhat compile",
+    "deploy:local": "hardhat deploy --network localhost",
+    "dai:local": "hardhat run scripts/dai_funcs.ts --network localhost",
+    
+    "deploy:kovan": "hardhat deploy --network kovan",
+    "dai:kovan": "hardhat run scripts/dai_funcs.ts --network kovan",
+    
+    "deploy:ropsten": "hardhat deploy --network ropsten",
+    "dai:ropsten": "hardhat run scripts/dai_funcs.ts --network ropsten"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.10",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@nomiclabs/hardhat-etherscan": "^2.1.6",
+    "@openzeppelin/contracts": "^4.3.2",
+    "@typechain/ethers-v5": "^7.0.1",
+    "@typechain/hardhat": "^2.3.0",
+    "@types/chai": "^4.2.21",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^16.7.13",
+    "@types/chai-as-promised": "^7.1.1",
+    "chai": "^4.3.4",
+    "chai-ethers": "^0.0.1",
+    "ethereum-waffle": "^3.4.0",
+    "ethers": "^5.4.6",
+    "hardhat": "^2.6.2",
+    "hardhat-deploy": "^0.9.1",
+    "ts-node": "^10.2.1",
+    "typechain": "^5.1.2",
+    "typescript": "^4.4.2",
+    "solidity-coverage": "^0.7.17"
+  }
+}
