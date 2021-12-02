@@ -9,6 +9,9 @@ contract MyDefiProject {
     IERC20 dai;
     IConditionalTokens conditionalTokens;
     address public oracle;
+    address admin;
+
+    mapping(bytes32 => mapping(uint => uint)) public tokenBalance;
 
     constructor (
         address _dai,
@@ -18,6 +21,7 @@ contract MyDefiProject {
         dai = IERC20(_dai);
         conditionalTokens = IConditionalTokens(_conditionalTokens);
         oracle = _oracle;
+        admin = msg.sender;
     }
 
     function createBet(bytes32 questionId, uint amount) external {
@@ -44,5 +48,62 @@ contract MyDefiProject {
             partition,
             amount
         );
+
+        tokenBalance[questionId][0] = amount;
+        tokenBalance[questionId][1] = amount;
+    }
+
+    function transferTokens (
+        bytes32 questionId,
+        uint indexSet,
+        address to,
+        uint amount
+    ) external {
+        require (msg.sender == admin, 'only Admin');
+        require (tokenBalance[questionId][indexSet] >= amount, 'not enough token');
+
+        bytes32 conditionId = conditionalTokens.getConditionId(
+            oracle,
+            questionId,
+            3
+        );
+
+        bytes32 collectionId = conditionalTokens.getCollectionId(
+            bytes32(0),
+            conditionId,
+            indexSet
+        );
+
+        uint positionId = conditionalTokens.getPositionId(
+            dai,
+            collectionId
+        );
+        conditionalTokens.safeTransferFrom(
+            address (this),
+            to,
+            positionId,
+            amount,
+            ""
+        );
+    }
+
+    function onERC1155Received(
+        address operator,
+        address from,
+        uint256 id,
+        uint256 value,
+        bytes calldata data
+    ) external returns (bytes4) {
+        return bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"));
+    }
+
+    function onERC1155BatchReceived(
+        address operator,
+        address from,
+        uint256[] calldata ids,
+        uint256[] calldata values,
+        bytes calldata data
+    ) external returns (bytes4) {
+        return bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"));
     }
 }
